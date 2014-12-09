@@ -19,7 +19,20 @@ var (
 )
 
 func DisplayWidth(str string) int {
-	return utf8.RuneCountInString(ansi.ReplaceAllLiteralString(str, ""))
+	s := ansi.ReplaceAllLiteralString(str, "")
+	n := 0
+	for i, w, l := 0, 0, len(s); i < l; i += w {
+		value, width := utf8.DecodeRuneInString(s[i:])
+		w = width
+		n++
+		if (value == '\u2063') || (value == '\u00a0') || (value == '└') || (value == '├') || (value == '│') {
+			continue
+		}
+		if w > 1 {
+			n++
+		}
+	}
+	return n
 }
 
 // Simple Condition for string

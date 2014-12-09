@@ -25,16 +25,22 @@ func WrapString(s string, lim int) ([]string, int) {
 	words := bytes.Split(bytes.Replace(bytes.TrimSpace([]byte(s)), nl, sp, -1), sp)
 	var lines []string
 	max := 0
+	max2 := 0
+	lim2 := lim
 	for _, v := range words {
 		max = len(v)
 		if max > lim {
 			lim = max
 		}
+		max2 = DisplayWidth(string(v[:max]))
+		if max2 > lim2 {
+			lim2 = max2
+		}
 	}
 	for _, line := range WrapWords(words, 1, lim, defaultPenalty) {
 		lines = append(lines, string(bytes.Join(line, sp)))
 	}
-	return lines, lim
+	return lines, lim2
 }
 
 // WrapWords is the low-level line-breaking algorithm, useful if you need more
