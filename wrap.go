@@ -22,7 +22,7 @@ const defaultPenalty = 1e5
 // Wrap wraps s into a paragraph of lines of length lim, with minimal
 // raggedness.
 func WrapString(s string, lim int) ([]string, int) {
-	words := bytes.Split(bytes.Replace(bytes.TrimSpace([]byte(s)), nl, sp, -1), sp)
+	words := bytes.Split(bytes.Replace([]byte(s), nl, sp, -1), sp)
 	var lines []string
 	max := 0
 	max2 := 0
