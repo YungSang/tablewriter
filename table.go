@@ -361,9 +361,14 @@ func (t Table) printRow(columns [][]string, colKey int) {
 			fmt.Fprintf(t.out, SPACE)
 			str := columns[y][x]
 
+			align := t.align
+			if (align == ALIGN_DEFAULT) && (str == "*") {
+				align = ALIGN_CENTRE
+			}
+
 			// This would print alignment
 			// Default alignment  would use multiple configuration
-			switch t.align {
+			switch align {
 			case ALIGN_CENTRE: //
 				fmt.Fprintf(t.out, "%s", Pad(str, SPACE, t.cs[y]))
 			case ALIGN_RIGHT:
